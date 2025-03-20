@@ -1,0 +1,177 @@
+﻿@model MYPRODUCTPRO.Models.EmplyeeListViweModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link href="~/styles/productliststyle.css" rel="stylesheet" />
+</head>
+<body>
+    @{
+        Layout = "~/Views/Shared/_MainPage.cshtml";
+    }
+
+    <div class="container mt-4">
+        <!-- ✅ Search Box Section -->
+        <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+            <div class="card-header text-white bg-primary">
+                <h5 class="mb-0">🔍 Search Employees Info</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="EmployeeList" asp-controller="Employee" method="post">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label asp-for="SearchEmpolyees.EmployeeID" class="form-label">Employee ID</label>
+                            <input asp-for="SearchEmpolyees.EmployeeID" type="number" class="form-control" placeholder="Enter Employee ID">
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="SearchEmpolyees.FirstName" class="form-label">Employee Name</label>
+                            <input asp-for="SearchEmpolyees.FirstName" type="text" class="form-control" placeholder="Enter Employee Name">
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="SearchEmpolyees.CreatedAt" class="form-label">Date</label>
+                            <input asp-for="SearchEmpolyees.CreatedAt" type="date" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="SearchEmpolyees.Location" class="form-label">Location</label>
+                            <input asp-for="SearchEmpolyees.Location"  class="form-control" placeholder="Enter Location">
+                        </div>
+                       
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success px-4 py-2">🔍 Search</button>
+                        <button type="reset" class="btn btn-secondary px-4 py-2" id="resetBtn">♻ Reset</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ Total Products Count Box -->
+  
+
+    <div class="total-products-container row">
+        <div class="total-products-card me-lg-5">
+            <h3>Total Employees</h3>
+            <p id="totalEmployees">0</p>
+        </div>
+   
+    
+        
+    </div>
+    
+    <
+    <div class="container mt-4">
+        <div class="table-container">
+            <table class="table table-striped table-bordered text-center align-middle">
+                <thead class="sticky-header">
+                    <tr>
+                        <th>EmpolyeeID</th>
+                        <th>EmployeeName</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Mobile</th>
+                        <th>Location</th>
+                        
+                        <th>Role</th>
+                        <th>Status</th>
+                       
+                        <th>CreatedAt</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+             
+                    <tbody>
+                        @foreach (var item in Model.EmplyeeList)
+                        {
+                            <tr>
+                                <td>@item.EmployeeID</td>
+                                <td>@item.FirstName</td>
+                                <td>@item.Email</td>
+                                <td>@item.Password</td>
+                                <td>@item.Mobile</td>
+                                <td>@item.Location</td>
+                                <td>@item.Role</td>
+                                <td>@item.Status</td>
+                                <td>@item.CreatedAt?.ToString("dd-MMM-yyyy hh:mm tt")</td>
+
+
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-action="CreateProductView" asp-route-id="@item.EmployeeID" class="btn btn-primary btn-sm">✏️ Edit</a>
+                                        <a asp-action="ProductDeleteByID" asp-route-id="@item.EmployeeID" class="btn btn-danger btn-sm">❌ Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                
+               
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let totalRows = document.querySelectorAll("tbody tr").length;
+            let countElement = document.getElementById("totalEmployees");
+
+            let count = 0;
+            let interval = setInterval(() => {
+                if (count < totalRows) {
+                    count++;
+                    countElement.textContent = count;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 50); // Counting Animation Speed
+        });
+
+        // Reset Button Functionality with Page Refresh
+        document.getElementById("resetBtn").addEventListener("click", function () {
+            document.querySelector("form").reset(); // Reset form fields
+            location.reload(); // Reload the page to refresh data
+        });
+    </script>
+    
+    
+    @if (TempData["NotDataFound"] != null)
+    { 
+        <script>
+             window.onload = function() {
+              alert("@TempData["NotDataFound"]");
+             }
+        </script>
+
+    }; 
+     
+    @if (TempData["required"] != null)
+    {
+        <script>
+            window.onload = function() {
+                alert("⚠️@TempData["required"]");
+            };
+            </script>
+    }
+    @if (TempData["Exception"] != null)
+    {
+        <script>
+            window.onload = function() {
+                alert("@TempData["Exception"]");
+            };
+        </script>
+    }
+    @if (TempData["ProductDelete"] != null)
+    {
+        <script>
+            window.onload = function() {
+                alert("@TempData["ProductDelete"]");
+            };
+        </script>
+    }
+   
+</body>
+</html>

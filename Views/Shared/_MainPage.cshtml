@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Bootstrap CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/styles/mainpagestyle.css" rel="stylesheet" />
+    
+</head>
+
+<body>
+
+    <!-- Navigation Pills -->
+    <nav>
+    <ul class="nav nav-pills nav-fill gap-2 p-1 small rounded-5 shadow-sm" id="pillNav2" role="tablist">
+        <li class="ms-lg-2" role="presentation">
+            <img src="~/img/logo-removebg-preview (1).png" width="140px" />
+        </li>
+
+        <!-- Admin Role Conditional Rendering -->
+        @if (ViewBag.Userrole == "manager")
+        {
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active rounded-5 mt-2 btn btn-primary text-white" href="/DashBoard/DashBoardPage">
+                    Home
+                </a>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link rounded-5 mt-2" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile">Profile</a>
+            </li>
+
+            <li class="nav-item dropdown" role="presentation">
+                <a class="nav-link rounded-5 mt-2 dropdown-toggle" href="#" id="product-tab" data-bs-toggle="dropdown" aria-expanded="false">
+                    Product
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="product-tab">
+                    <li><a class="dropdown-item" href="/Product/CreateProductView">ADD PRODUCT</a></li>
+                    <li><a class="dropdown-item" href="/Product/ProductList">PRODUCT LIST</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown" role="presentation">
+                <a class="nav-link rounded-5 mt-2 dropdown-toggle" href="#" id="employees-tab" data-bs-toggle="dropdown" aria-expanded="false">
+                    EMPLOYEES
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="employees-tab">
+                    <li><a class="dropdown-item" href="/Employee/CreateEmp">CREATE EMPLOYEES</a></li>
+                    <li><a class="dropdown-item" href="/Employee/EmployeeList">EMPLOYEES LIST</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link rounded-5 mt-2" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact">Contact</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item" role="presentation">
+                <a class="nav-link rounded-5 mt-2" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact">Contact</a>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link rounded-5 mt-2" id="help-tab" data-bs-toggle="tab" href="#help" role="tab" aria-controls="help">Help</a>
+            </li>
+        }
+
+        <li>
+            @if (ViewBag.UserName != null)
+            {
+                <div class="container bootstrap snippet">
+                    <div class="row justify-content-end align-items-center">
+                        <!-- Profile Image & Username in One Row (Right-Aligned) -->
+                        <div class="col-auto d-flex align-items-center text-end">
+                            <!-- Profile Image -->
+                            @if (!string.IsNullOrEmpty(ViewBag.Profile))
+                            {
+                                <img id="profileImage" src="data:image/png;base64,@ViewBag.Profile" class="avatar img-thumbnail" alt="avatar">
+                            }
+                            else
+                            {
+                                <!-- Default Image if Profile Picture URL is empty -->
+                                <img id="profileImage" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-thumbnail" alt="avatar">
+                            }
+
+                            <!-- User Name (Next to Image) -->
+                            <h5 class="ms-2 mb-0">@ViewBag.UserName</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </li>
+
+
+    </ul>
+    </nav>
+    <br />
+
+   
+    <!-- Tab Content -->
+    <div class="container mt-5">
+        <!-- This is where the content of the page will be rendered -->
+        @RenderBody()  <!-- This renders the content from the child view -->
+    </div>
+
+    <!-- Bootstrap JS from CDN (Required for Tabs) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+
+</body>
+</html>

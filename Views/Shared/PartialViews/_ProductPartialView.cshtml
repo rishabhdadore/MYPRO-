@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MYPRODUCTPRO.Models.ProductModelClass>
+
+
+
+<link href="~/styles/cardstyle.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="container bootstrap snippet">
+                    <div class="form-container">
+                        <!-- Right Side - Live Preview Card -->
+                        <div class="preview-section">
+                            <div class="card-preview">
+                                <img src="data:image/png;base64,@item.CardProductImage" alt="@item.ProductName" class="img-fluid rounded-5" />
+                                <div class="card-body">
+                                    <h4 class="previewProductName">@item.ProductName</h4>
+                                    <h5 class="previewPrice">$@item.Price</h5>
+                                    <p class="previewCategory"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

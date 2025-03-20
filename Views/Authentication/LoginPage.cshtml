@@ -1,0 +1,89 @@
+﻿@model MYPRODUCTPRO.Models.LoginClass
+
+@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: url('~/img/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .login-container {
+        max-width: 400px;
+        width: 280%;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+    }
+
+    .card-header {
+        text-align: center;
+        border-bottom: none;
+    }
+
+        .card-header img {
+            width: 220px;
+        }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 8px;
+    }
+
+    .form-group span {
+        color: red;
+        font-size: 14px;
+    }
+</style>
+
+<div class="login-container">
+    <div class="card">
+        <div class="card-header">
+            <img src="~/img/logo-removebg-preview (1).png" alt="Logo"  />
+        </div>
+        <div class="card-body">
+            <form asp-action="LoginPage" asp-controller="Authentication" method="post">
+                <div class="form-group">
+                    <label asp-for="UserName">Email Address</label>
+                    <input asp-for="UserName" class="form-control" placeholder="Enter Email" >
+                    <span asp-validation-for="UserName"></span>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label asp-for="UserPassword">Password</label>
+                    <input asp-for="UserPassword" type="password" class="form-control" placeholder="Enter Password" >
+                    <span asp-validation-for="UserPassword"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-5">Login</button>
+
+            </form>
+            @if (ViewBag.ERROR != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.ERROR  <!-- Display error message -->
+                </div>
+            }
+
+          
+        </div>
+    </div>
+</div>
